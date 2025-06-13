@@ -1,21 +1,25 @@
 :root {
     --cinza-fundo: rgb(72, 70, 70);
     --verde-principal: green;
+    --branco: white;
 }
 
 
 body {
     background-color: rgb(72, 70, 70);
-    margin: 0;
+    margin: 0 10% 0 10%;
     display: flex;
+    flex-direction: column;
+    border: solid white 1px;
 }
 
 header {
     width: 100%;
     height: 120px;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--branco);
     display: flex;
     flex-direction: row;
+    box-sizing: border-box;
 }
 
 #header-logo{
@@ -69,5 +73,24 @@ header {
 .nav-item a:hover {
     transition: ease 0.3s;
     background-color: var(--verde-principal);
-    color: white;
+    color: var(--branco);
+}
+
+/* Main */
+
+main {
+    border: solid red 1px;
+    height: 1000px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* Footer */
+
+footer {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--verde-principal);
+    height: 300px;
 }
