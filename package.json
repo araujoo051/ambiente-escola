@@ -1,0 +1,26 @@
+{
+  "name": "ambiente-escola",
+  "version": "1.0.0",
+  "description": "Ambiente de escola para inserir, pesquisar, alterar e excluir cursos e alunos.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/araujoo051/ambiente-escola.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/araujoo051/ambiente-escola/issues"
+  },
+  "homepage": "https://github.com/araujoo051/ambiente-escola#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
