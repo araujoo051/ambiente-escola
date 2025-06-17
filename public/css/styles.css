@@ -81,11 +81,10 @@ header {
 main {
     display: flex;
     justify-content: center;
-    border: solid red 1px;
-    height: 1000px;
+    height: fit-content;
     width: 100%;
     box-sizing: border-box;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: "ROBOTO", sans-serif;
     text-align: justify;
 }
 
@@ -101,9 +100,18 @@ main {
 
 #main_container h1 {
 
-    font-weight: 400px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
     color: var(--verde-principal);
+    letter-spacing: 1px;
+    text-align: center;
+    text-shadow:2px 2px 5px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+    position: relative;
+
 }
+
 
 .main_img_paragrafo {
 
@@ -112,18 +120,43 @@ main {
     justify-content: flex-start;
     width: 100%;
     height: fit-content;
-    border: solid 1px blue;
 
 }
 
 .main_img_paragrafo img {
 
     width: 100%;
-    height: 250px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 8px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
     
 }
 
 
+.main_paragrafo {
+
+    width: 80%;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    padding: 15px 20px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    
+
+}
+
+#main_paragrafo_diff {
+
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: --branco;
+    background-color:var(--verde-principal);
+    border-left: 5px solid --branco;
+    padding: 15px 20px;
+    width: 80%;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+}
 
 
 
