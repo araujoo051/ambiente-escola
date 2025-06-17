@@ -261,14 +261,16 @@ main {
 #resultados_busca table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
     color: white;
+    padding: 0;
+    max-width: 95%;
+    margin-bottom: 5%;
 }
 
 #resultados_busca th, #resultados_busca td {
     border: 1px solid white;
-    padding: 8px 12px;
-    text-align: left;
+    padding: 5px 10px;
+    text-align: center;
 }
 
 #resultados_busca th {

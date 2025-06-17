@@ -28,50 +28,10 @@
                     </form>
                 </div>
 
-                <% if (errorMessage) { %>
-                    <p style="color: red;">
-                        <%= errorMessage %>
-                    </p>
-                    <% } else if (search && cursos.length> 0) { %>
-                        <div id="resultados_busca">
-                            <h2>Resultados para: "<%= search %>"</h2>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Nome</th>
-                                        <th>Modalidade</th>
-                                        <th>Semestre</th>
-                                        <th>Turno</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% cursos.forEach(curso=> { %>
-                                        <tr>
-                                            <td>
-                                                <%= curso.id %>
-                                            </td>
-                                            <td>
-                                                <%= curso.nome %>
-                                            </td>
-                                            <td>
-                                                <%= curso.modalidade %>
-                                            </td>
-                                            <td>
-                                                <%= curso.semestre %>
-                                            </td>
-                                            <td>
-                                                <%= curso.turno %>
-                                            </td>
-                                        </tr>
-                                        <% }) %>
-                                </tbody>
-                            </table>
-                            <% } else if (search) { %>
-                                <p>Nenhum curso encontrado para "<%= search %>".</p>
-                                <% } %>
+                <%- include('../partials/resultadosBusca', { search, cursos, errorMessage }) %>
 
-                        </div>
+
+            </div>
         </main>
 
         <%- include('../partials/footer') %>
