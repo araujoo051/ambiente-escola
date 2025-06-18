@@ -1,97 +1,151 @@
-// app.js
-
 const express = require('express');
 const path = require('path');
-const axios = require('axios');    // <<< aqui
+const axios = require('axios');
+let cursosMemoria = [];
 
 const app = express();
 
-// Configuração do EJS e da pasta pública
+// Configuração Geral EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/home', (req, res) => {
+// Arquivos CSS, JS e Imagens
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+
+// Rota pagina inicial
+app.get('/', (req, res) => {
   res.render('pages/index', {
     title: 'Home',
-    bodyClass: 'home-page',
-  })
-});
-
-// Rota /cursos (inicial)
-app.get('/cursos', (req, res) => {
-  res.render('pages/HomeCurso', {
-    title: 'Cursos',
-    bodyClass: 'cursos-page',
-    search: '',
-    cursos: [],
-    errorMessage: ''
+    bodyClass: 'home-page'
   });
 });
 
-// Rota de busca usando axios
-app.get('/cursos/buscar', async (req, res) => {
-  const raw = req.query.search || '';
-  const term = raw.trim().toLowerCase();
-
-  console.log('Buscando cursos com termo:', term);
-
+// Rota cursos 
+app.get('/cursos', async (req, res) => {
   try {
     const apiUrl = `https://ingresso.ifrs.edu.br/prematricula/ws/listarCursosIW20242.php`;
-
-    // Chamada com axios
     const response = await axios.get(apiUrl);
-    const cursosAPI = response.data;
-    console.log(`Recebidos ${cursosAPI.length} cursos da API.`);
+    const cursosAPI = response.data.map(curso => ({
+      id: curso.id,
+      nome: curso.nome,
+      modalidade: curso.modalidade,
+      semestre: curso.semestre,
+      turno: curso.turno,
+      unidade: curso.unidade?.nomeCampus || ''
+    }));
 
-    // Filtro global
-    const cursosFiltrados = cursosAPI
-      .filter(curso => {
-        const nf = (s) => (s || '').toString().toLowerCase();
-        return (
-          nf(curso.id).includes(term) ||
-          nf(curso.nome).includes(term) ||
-          nf(curso.modalidade).includes(term) ||
-          nf(curso.semestre).includes(term) ||
-          nf(curso.turno).includes(term) ||
-          nf(curso.unidade?.nomeCampus).includes(term)
-        );
-      })
-      .map(curso => ({
-        id: curso.id,
-        nome: curso.nome,
-        modalidade: curso.modalidade,
-        semestre: curso.semestre,
-        turno: curso.turno,
-        unidade: curso.unidade?.nomeCampus || ''
-      }));
+    const todosCursos = [...cursosAPI, ...cursosMemoria];
 
-    console.log(`Após filtro: ${cursosFiltrados.length} cursos.`);
     res.render('pages/HomeCurso', {
       title: 'Cursos',
       bodyClass: 'cursos-page',
-      search: raw,
-      cursos: cursosFiltrados,
+      search: '',
+      cursos: todosCursos,
       errorMessage: ''
     });
-
-  } catch (err) {
-    console.error('Erro na busca de cursos:', err.message);
+  } catch (error) {
+    console.error('Erro ao carregar cursos:', error.message);
     res.render('pages/HomeCurso', {
       title: 'Cursos',
       bodyClass: 'cursos-page',
-      search: raw,
+      search: '',
       cursos: [],
-      errorMessage: 'Erro ao buscar cursos. Tente novamente mais tarde.'
+      errorMessage: 'Erro ao carregar a lista de cursos.'
     });
   }
 });
 
-// Outras rotas…
-app.get('/cursos/novo',   (req, res) => res.render('pages/InserirCurso',   { title: 'Inserir Curso',   bodyClass: 'cursos-page' }));
-app.get('/cursos/atualizar',(req, res) => res.render('pages/AtualizarCurso',{ title: 'Atualizar Curso', bodyClass: 'cursos-page' }));
-app.get('/cursos/excluir',(req, res) => res.render('pages/ExcluirCurso',  { title: 'Excluir Curso',   bodyClass: 'cursos-page' }));
+// Rota de busca (filtragem por qualquer campo)
+app.get('/cursos/buscar', async (req, res) => {
+  const searchRaw = req.query.search || '';
+  const search = searchRaw.trim().toLowerCase();
 
-// Inicia o servidor
+  try {
+    const apiUrl = `https://ingresso.ifrs.edu.br/prematricula/ws/listarCursosIW20242.php`;
+    const response = await axios.get(apiUrl);
+    const cursosAPI = response.data.map(curso => ({
+      id: curso.id,
+      nome: curso.nome,
+      modalidade: curso.modalidade,
+      semestre: curso.semestre,
+      turno: curso.turno,
+      unidade: curso.unidade?.nomeCampus || ''
+    }));
+
+    const todosCursos = [...cursosAPI, ...cursosMemoria];
+
+    const cursosFiltrados = todosCursos.filter(curso =>
+      curso.nome.toLowerCase().includes(search) ||
+      curso.modalidade.toLowerCase().includes(search) ||
+      String(curso.semestre).includes(search) ||
+      curso.turno.toLowerCase().includes(search) ||
+      curso.unidade.toLowerCase().includes(search)
+    );
+
+    res.render('pages/HomeCurso', {
+      title: 'Cursos',
+      bodyClass: 'cursos-page',
+      search,
+      cursos: cursosFiltrados,
+      errorMessage: cursosFiltrados.length === 0 ? `Nenhum curso encontrado para "${search}".` : ''
+    });
+
+  } catch (error) {
+    console.error('Erro na busca:', error.message);
+    res.render('pages/HomeCurso', {
+      title: 'Cursos',
+      bodyClass: 'cursos-page',
+      search,
+      cursos: [],
+      errorMessage: 'Erro ao buscar os cursos.'
+    });
+  }
+});
+
+// Inserir Curso
+app.get('/cursos/novo', (req, res) => {
+  res.render('pages/InserirCurso', {
+    title: 'Inserir Curso',
+    bodyClass: 'cursos-page'
+  });
+});
+
+app.post('/cursos/inserido', (req, res) => {
+  const { id_curso, nome, modalidade, semestre, turno, campus } = req.body;
+
+  const novoCurso = {
+    id: id_curso,
+    nome,
+    modalidade,
+    semestre,
+    turno,
+    unidade: campus
+  };
+
+  cursosMemoria.push(novoCurso);
+  console.log('Curso inserido:', novoCurso);
+  res.redirect('/cursos');
+});
+
+// Atualizar Curso
+app.get('/cursos/atualizar', (req, res) => {
+  res.render('pages/AtualizarCurso', {
+    title: 'Atualizar Curso',
+    bodyClass: 'cursos-page'
+  });
+});
+
+// Excluir Curso
+app.get('/cursos/excluir', (req, res) => {
+  res.render('pages/ExcluirCurso', {
+    title: 'Excluir Curso',
+    bodyClass: 'cursos-page'
+  });
+});
+
+// Porta do servidor
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Rodando em http://localhost:${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Servidor rodando: http://localhost:${PORT}`);
+});

@@ -256,6 +256,55 @@ main {
     background-color: var(--verde-secundario);
 }
 
+#curso_form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+#curso_form label {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+#curso_form input,
+#curso_form select {
+    width: 30%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid var(--verde-principal);
+    padding-left: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    appearance: none;        /* Remove o estilo padrão da maioria dos browsers */
+    -webkit-appearance: none; /* Para Safari ou Chrome */
+    -moz-appearance: none;    /* Firefox */
+    background-color: var(--branco); 
+    box-sizing: border-box;
+}
+
+#curso_form select {
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><polygon points="0,0 10,0 5,10" fill="%23000"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    padding-right: 30px; 
+}
+
+#curso_form_btn {
+    width: 100px;
+    height: 30px;
+    background-color: var(--verde-principal);
+    color: var(--branco);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
 /* Cursos Search */
 
 #resultados_busca table {

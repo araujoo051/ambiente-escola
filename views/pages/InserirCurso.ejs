@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
+
+    <%- include('../partials/header') %>
+
+        <main id="cursos">
+
+            <div id="cursos_container">
+
+                <div id="cursos_header">
+                    <h1>Inserir Curso</h1>
+                    <p>Preencha os campos abaixo para inserir um novo curso.</p>
+                </div>
+
+                <div id="cursos_buttons">
+                    <ul>
+                        <li><a href="/cursos">Voltar</a></li>
+                    </ul>
+                </div>
+
+                <form action="/cursos/inserido" method="POST" id="curso_form">
+                    <label for="id_curso">ID do Curso:</label>
+                    <input type="text" name="id_curso" id="id_curso" required>
+
+                    <label for="nome">Nome do Curso:</label>
+                    <input type="text" name="nome" id="nome" required></input>
+
+                    <label for="modalidade">Modalidade:</label>
+                    <input type="text" name="modalidade" id="modalidade" required>
+
+                    <label for="semestre">Semestre:</label>
+                    <input type="text" name="semestre" id="semestre" required>
+
+                    <label for="turno">Turno:</label>
+                    <select name="turno" id="turno" required>
+                        <option value="">Selecione o turno</option>
+                        <option value="MANHÃ">Manhã</option>
+                        <option value="TARDE">Tarde</option>
+                        <option value="NOITE">Noite</option>
+                        <option value="MANHÃ E TARDE">Manhã e Tarde</option>
+                    </select>
+
+                    <label for="campus">Campus:</label>
+                    <input type="text" name="campus" id="campus" required>
+
+                    <button id="curso_form_btn" type="submit">Inserir Curso</button>
+                </form>
+
+            </div>
+
+
+        </main>
+
+        <%- include('../partials/footer') %>
+
+</html>
