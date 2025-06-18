@@ -92,7 +92,7 @@ app.get('/cursos/buscar', async (req, res) => {
       search,
       cursos: cursosFiltrados,
       errorMessage: cursosFiltrados.length === 0 ? `Nenhum curso encontrado para "${search}".` : '',
-      sucesso: '' // ✅ Corrigido para evitar ReferenceError
+      sucesso: '' 
     });
 
   } catch (error) {
@@ -103,7 +103,7 @@ app.get('/cursos/buscar', async (req, res) => {
       search,
       cursos: [],
       errorMessage: 'Erro ao buscar os cursos.',
-      sucesso: '' // ✅ Corrigido aqui também
+      sucesso: '' 
     });
   }
 });
