@@ -304,6 +304,38 @@ main {
     margin-bottom: 10px;
 }
 
+#sucesso_page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    color: var(--branco);
+}
+
+#sucesso_btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#sucesso_btn {
+    width: 250px;
+    height: 50px;
+    background-color: var(--verde-principal);
+    color: var(--branco);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 20px;
+    text-decoration: none;
+    text-wrap: nowrap;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
 
 /* Cursos Search */
 

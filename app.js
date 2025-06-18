@@ -36,13 +36,15 @@ app.get('/cursos', async (req, res) => {
     }));
 
     const todosCursos = [...cursosAPI, ...cursosMemoria];
+    const sucesso = req.query.sucesso || '';
 
     res.render('pages/HomeCurso', {
       title: 'Cursos',
       bodyClass: 'cursos-page',
       search: '',
       cursos: todosCursos,
-      errorMessage: ''
+      errorMessage: '',
+      sucesso
     });
   } catch (error) {
     console.error('Erro ao carregar cursos:', error.message);
@@ -51,7 +53,8 @@ app.get('/cursos', async (req, res) => {
       bodyClass: 'cursos-page',
       search: '',
       cursos: [],
-      errorMessage: 'Erro ao carregar a lista de cursos.'
+      errorMessage: 'Erro ao carregar a lista de cursos.',
+      sucesso: ''
     });
   }
 });
@@ -88,7 +91,8 @@ app.get('/cursos/buscar', async (req, res) => {
       bodyClass: 'cursos-page',
       search,
       cursos: cursosFiltrados,
-      errorMessage: cursosFiltrados.length === 0 ? `Nenhum curso encontrado para "${search}".` : ''
+      errorMessage: cursosFiltrados.length === 0 ? `Nenhum curso encontrado para "${search}".` : '',
+      sucesso: '' // ✅ Corrigido para evitar ReferenceError
     });
 
   } catch (error) {
@@ -98,7 +102,8 @@ app.get('/cursos/buscar', async (req, res) => {
       bodyClass: 'cursos-page',
       search,
       cursos: [],
-      errorMessage: 'Erro ao buscar os cursos.'
+      errorMessage: 'Erro ao buscar os cursos.',
+      sucesso: '' // ✅ Corrigido aqui também
     });
   }
 });
@@ -124,8 +129,12 @@ app.post('/cursos/inserido', (req, res) => {
   };
 
   cursosMemoria.push(novoCurso);
-  console.log('Curso inserido:', novoCurso);
-  res.redirect('/cursos');
+
+  res.render('pages/SucessoCurso', {
+    title: 'Curso Inserido',
+    bodyClass: 'sucesso-page',
+    nome
+  });
 });
 
 // Atualizar Curso

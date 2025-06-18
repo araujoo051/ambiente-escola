@@ -1,39 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('../partials/head') %>
+<%- include('../partials/header') %>
 
-    <%- include('../partials/header') %>
+<main id="cursos">
+    <div id="cursos_container">
 
-        <main id="cursos">
-            <div id="cursos_container">
+        <div id="cursos_header">
+            <h1>Cursos do IFRS:</h1>
+            <p>Confira abaixo os cursos oferecidos pelo Instituto Federal do Rio Grande do Sul - Campus Restinga.</p>
+        </div>
 
-                <div id="cursos_header">
-                    <h1>Cursos do IFRS:</h1>
-                    <p>Confira abaixo os cursos oferecidos pelo Instituto Federal do Rio Grande do Sul - Campus
-                        Restinga.</p>
-                </div>
+        <div id="cursos_buttons">
+            <ul>
+                <li><a href="/cursos/novo">Inserir</a></li>
+                <li><a href="/cursos/atualizar">Atualizar</a></li>
+                <li><a href="/cursos/excluir">Excluir</a></li>
+            </ul>
+        </div>
 
-                <div id="cursos_buttons">
-                    <ul>
-                        <li><a href="/cursos/novo">Inserir</a></li>
-                        <li><a href="/cursos/atualizar">Atualizar</a></li>
-                        <li><a href="/cursos/excluir">Excluir</a></li>
-                    </ul>
-                </div>
+        <div id="cursos_search">
+            <form action="/cursos/buscar" method="get">
+                <input type="text" name="search" placeholder="Buscar curso...">
+                <button type="submit">Filtrar</button>
+            </form>
+        </div>
 
-                <div id="cursos_search">
-                    <form action="/cursos/buscar" method="get">
-                        <input type="text" name="search" placeholder="Buscar curso...">
-                        <button type="submit">Filtrar</button>
-                    </form>
-                </div>
+        <%- include('../partials/resultadosBusca', { search, cursos, errorMessage }) %>
 
-                <%- include('../partials/resultadosBusca', { search, cursos, errorMessage }) %>
+    </div>
+</main>
 
-
-            </div>
-        </main>
-
-        <%- include('../partials/footer') %>
+<% if (sucesso) { %>
+  <script>
+    alert(decodeURIComponent("<%- sucesso %>"));
+  </script>
+<% } %>
 
 </html>

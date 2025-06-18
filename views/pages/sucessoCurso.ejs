@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <%- include('../partials/head') %>
+  <%- include('../partials/header') %>
+
+  <main id="sucesso_page" style="text-align: center; padding: 2rem;">
+    <h1>✅ Curso inserido com sucesso!!</h1>
+    <p>O curso "<strong><%= nome %></strong>" foi adicionado com sucesso.</p>
+
+    <div id="sucesso_btn-container">
+      <a href="/cursos" id="sucesso_btn">Voltar para lista de cursos</a>
+    </div>
+  </main>
+
+  <%- include('../partials/footer') %>
+</html>
