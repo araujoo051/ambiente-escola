@@ -137,19 +137,30 @@ app.post('/cursos/inserido', (req, res) => {
   });
 });
 
-// Atualizar Curso
+// Atualizar e Excluir Curso
 app.get('/cursos/atualizar', (req, res) => {
+  const cursoId = req.query.id;
   res.render('pages/AtualizarCurso', {
     title: 'Atualizar Curso',
-    bodyClass: 'cursos-page'
+    bodyClass: 'cursos-page',
+    curso: {
+      id: cursoId,
+      nome: '',
+      descricao: ''
+    }
   });
 });
 
-// Excluir Curso
 app.get('/cursos/excluir', (req, res) => {
+  const cursoId = req.query.id;
   res.render('pages/ExcluirCurso', {
     title: 'Excluir Curso',
-    bodyClass: 'cursos-page'
+    bodyClass: 'cursos-page',
+    curso: {
+      id: cursoId,
+      nome: '',
+      descricao: ''
+    }
   });
 });
 

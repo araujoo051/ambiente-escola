@@ -1,41 +1,53 @@
 <% if (errorMessage) { %>
     <p style="color: red;"><%= errorMessage %></p>
-<% } else if (cursos.length > 0) { %>
+  <% } else if (cursos.length > 0) { %>
     <div id="resultados_busca">
-        <% if (search) { %>
-            <h2>Resultados para: "<%= search %>"</h2>
-        <% } else { %>
-            <h2>Todos os cursos</h2>
-        <% } %>
-
+      <% if (search) { %>
+        <h2>Resultados para: "<%= search %>"</h2>
+      <% } else { %>
+        <h2>Todos os cursos</h2>
+      <% } %>
+  
+      <form action="/cursos/acao" method="POST">
         <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Modalidade</th>
-                    <th>Semestre</th>
-                    <th>Turno</th>
-                    <th>Unidade</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% cursos.forEach(curso => { %>
-                    <tr>
-                        <td><%= curso.id %></td>
-                        <td><%= curso.nome %></td>
-                        <td><%= curso.modalidade %></td>
-                        <td><%= curso.semestre %></td>
-                        <td><%= curso.turno %></td>
-                        <td><%= curso.unidade %></td>
-                    </tr>
-                <% }) %>
-            </tbody>
+          <thead>
+            <tr>
+              <th>Selecionar</th>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Modalidade</th>
+              <th>Semestre</th>
+              <th>Turno</th>
+              <th>Unidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% cursos.forEach(curso => { %>
+              <tr>
+                <td>
+                  <input type="radio" name="cursoId" value="<%= curso.id %>" required>
+                </td>
+                <td><%= curso.id %></td>
+                <td><%= curso.nome %></td>
+                <td><%= curso.modalidade %></td>
+                <td><%= curso.semestre %></td>
+                <td><%= curso.turno %></td>
+                <td><%= curso.unidade %></td>
+              </tr>
+            <% }) %>
+          </tbody>
         </table>
-<% } else { %>
+  
+        <div style="margin-top: 10px;">
+          <button type="submit" name="action" value="atualizar">Atualizar</button>
+          <button type="submit" name="action" value="excluir">Excluir</button>
+        </div>
+      </form>
+  <% } else { %>
     <% if (search) { %>
-        <p>Nenhum curso encontrado para "<%= search %>".</p>
+      <p>Nenhum curso encontrado para "<%= search %>".</p>
     <% } else { %>
-        <p>Nenhum curso disponível no momento.</p>
+      <p>Nenhum curso disponível no momento.</p>
     <% } %>
-<% } %>
+  <% } %>
+  

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/head') %>
+
+    <%- include('../partials/header') %>
+
+        <main id="cursos">
+
+            <div id="cursos_container">
+
+                <div id="cursos_header">
+                    <h1>Página de atualização de dados:</h1>
+                    <p>Preencha os campos que você deseja alterar no curso.</p>
+                </div>
+
+                <div id="cursos_buttons">
+                    <ul>
+                        <li><a href="/cursos">Voltar</a></li>
+                        <li><a href="/cursos/novo">Inserir</a></li>
+                        <li><a href="/cursos/excluir">Excluir</a></li>
+                    </ul>
+                </div>
+
+                <div id="cursos_form_atualizar">
+
+                    <form action="/cursos/atualizar" method="POST">
+
+                        <label for="id">ID do curso:</label>
+                        <input type="text" name="id" id="id" value="<%= curso.id %>" readonly>
+
+                        <label for="nome">Nome do curso:</label>
+                        <input type="text" name="nome" id="nome" value="<%= curso.nome %>">
+
+                        <label for="descricao">Descrição do curso:</label>
+                        <textarea name="descricao" id="descricao"><%= curso.descricao %></textarea>
+
+                        <button type="submit">Atualizar</button>
+
+                    </form>
+                </div>
+
+
+
+        </main>
+
+
+        <%- include('../partials/footer') %>
+
+</html>
