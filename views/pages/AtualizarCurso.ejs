@@ -1,50 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <%- include('../partials/head') %>
+<%- include('../partials/header') %>
 
-    <%- include('../partials/header') %>
+<main id="cursos">
+  <div id="cursos_container">
+    <div id="cursos_header">
+      <h1>Página de atualização de dados:</h1>
+      <p>Preencha os campos que você deseja alterar no curso.</p>
+    </div>
 
-        <main id="cursos">
+    <div id="cursos_buttons">
+      <ul>
+        <li><a href="/cursos">Voltar</a></li>
+        <li><a href="/cursos/novo">Inserir</a></li>
+        <li><a href="/cursos/excluir?id=<%= curso.id %>">Excluir</a></li>
+      </ul>
+    </div>
 
-            <div id="cursos_container">
+    <div id="cursos_form_atualizar">
+      <form action="/cursos/atualizar" method="POST">
+        <label for="id">ID do curso:</label>
+        <input type="text" name="id" id="id" value="<%= curso.id %>" readonly>
 
-                <div id="cursos_header">
-                    <h1>Página de atualização de dados:</h1>
-                    <p>Preencha os campos que você deseja alterar no curso.</p>
-                </div>
+        <label for="nome">Nome do curso:</label>
+        <input type="text" name="nome" id="nome" value="<%= curso.nome %>">
 
-                <div id="cursos_buttons">
-                    <ul>
-                        <li><a href="/cursos">Voltar</a></li>
-                        <li><a href="/cursos/novo">Inserir</a></li>
-                        <li><a href="/cursos/excluir">Excluir</a></li>
-                    </ul>
-                </div>
+        <label for="modalidade">Modalidade:</label>
+        <input type="text" name="modalidade" id="modalidade" value="<%= curso.modalidade %>">
 
-                <div id="cursos_form_atualizar">
+        <label for="semestre">Semestre:</label>
+        <input type="text" name="semestre" id="semestre" value="<%= curso.semestre %>">
 
-                    <form action="/cursos/atualizar" method="POST">
+        <label for="turno">Turno:</label>
+        <input type="text" name="turno" id="turno" value="<%= curso.turno %>">
 
-                        <label for="id">ID do curso:</label>
-                        <input type="text" name="id" id="id" value="<%= curso.id %>" readonly>
+        <label for="unidade">Unidade:</label>
+        <input type="text" name="unidade" id="unidade" value="<%= curso.unidade %>">
 
-                        <label for="nome">Nome do curso:</label>
-                        <input type="text" name="nome" id="nome" value="<%= curso.nome %>">
+        <button type="submit">Atualizar</button>
+      </form>
+    </div>
+  </div>
+</main>
 
-                        <label for="descricao">Descrição do curso:</label>
-                        <textarea name="descricao" id="descricao"><%= curso.descricao %></textarea>
-
-                        <button type="submit">Atualizar</button>
-
-                    </form>
-                </div>
-
-
-
-        </main>
-
-
-        <%- include('../partials/footer') %>
-
+<%- include('../partials/footer') %>
 </html>

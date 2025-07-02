@@ -1,34 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <%- include('../partials/head') %>
 <%- include('../partials/header') %>
 
 <main id="cursos">
-    <div id="cursos_container">
+  <div id="cursos_container">
 
-        <div id="cursos_header">
-            <h1>Cursos do IFRS:</h1>
-            <p>Confira abaixo os cursos oferecidos pelo Instituto Federal do Rio Grande do Sul - Campus Restinga.</p>
-        </div>
-
-        <div id="cursos_buttons">
-            <ul>
-                <li><a href="/cursos/novo">Inserir</a></li>
-                <li><a href="/cursos/atualizar">Atualizar</a></li>
-                <li><a href="/cursos/excluir">Excluir</a></li>
-            </ul>
-        </div>
-
-        <div id="cursos_search">
-            <form action="/cursos/buscar" method="get">
-                <input type="text" name="search" placeholder="Buscar curso...">
-                <button type="submit">Filtrar</button>
-            </form>
-        </div>
-
-        <%- include('../partials/resultadosBusca', { search, cursos, errorMessage }) %>
-
+    <div id="cursos_header">
+      <h1>Cursos do IFRS:</h1>
+      <p>Confira abaixo os cursos oferecidos pelo Instituto Federal do Rio Grande do Sul - Campus Restinga.</p>
     </div>
+
+    <div id="cursos_buttons">
+      <ul>
+        <li><a href="/cursos/novo">Inserir</a></li>
+        <li><button onclick="acaoCurso('atualizar')">Atualizar</button></li>
+        <li><button onclick="acaoCurso('excluir')">Excluir</button></li>
+      </ul>
+    </div>
+
+    <div id="cursos_search">
+      <form action="/cursos/buscar" method="get">
+        <input type="text" name="search" placeholder="Buscar curso...">
+        <button type="submit">Filtrar</button>
+      </form>
+    </div>
+
+    <% if (errorMessage) { %>
+      <p style="color: red;"><%= errorMessage %></p>
+    <% } else if (cursos.length > 0) { %>
+      <div id="resultados_busca">
+        <% if (search) { %>
+          <h2>Resultados para: "<%= search %>"</h2>
+        <% } else { %>
+          <h2>Todos os cursos</h2>
+        <% } %>
+
+        <form id="formCursos">
+          <table>
+            <thead>
+              <tr>
+                <th>Selecionar</th>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Modalidade</th>
+                <th>Semestre</th>
+                <th>Turno</th>
+                <th>Unidade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% cursos.forEach(curso => { %>
+                <tr>
+                  <td><input type="radio" name="cursoId" value="<%= curso.id %>" required></td>
+                  <td><%= curso.id %></td>
+                  <td><%= curso.nome %></td>
+                  <td><%= curso.modalidade %></td>
+                  <td><%= curso.semestre %></td>
+                  <td><%= curso.turno %></td>
+                  <td><%= curso.unidade %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    <% } else { %>
+      <p><%= search ? `Nenhum curso encontrado para "${search}".` : "Nenhum curso disponível no momento." %></p>
+    <% } %>
+
+  </div>
 </main>
 
 <% if (sucesso) { %>
@@ -37,4 +78,17 @@
   </script>
 <% } %>
 
+<script>
+  function acaoCurso(acao) {
+    const selecionado = document.querySelector('input[name="cursoId"]:checked');
+    if (!selecionado) {
+      alert('Selecione um curso para ' + acao + '.');
+      return;
+    }
+    const id = selecionado.value;
+    window.location.href = `/cursos/${acao}?id=${id}`;
+  }
+</script>
+
+<%- include('../partials/footer') %>
 </html>
